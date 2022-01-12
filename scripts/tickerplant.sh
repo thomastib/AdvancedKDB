@@ -1,4 +1,4 @@
-cd $ALARIC_MD_HOME
+cd $ADV_KDB_HOME
 . ./config/env.sh
 
 CMD="taskset -c q processes/tick.q ${Q_SCHEMA} ${TP_LOG_LOCATION} ${TP_LOG_TIME} ${TP_LOG_MEM}

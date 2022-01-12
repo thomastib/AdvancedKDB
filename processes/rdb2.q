@@ -39,7 +39,7 @@ upd:{[table;data]
     .log.info"Flushing data from ",string table;
     table set 0#value table; //flushes out cached data
     if[`sym in cols table;
-        .log.info"Applying grouped attribute on sym column to in-memory table: ",string table;
+        .log.out"Applying grouped attribute on sym column to in-memory table: ",string table;
         keyCols:keys table; //table needs to be unkeyed to apply attributes
         @[0!table;`sym;`g#]; //reapplies g# attribute if it is needed
         keyCols xkey table;
@@ -51,7 +51,7 @@ upd:{[table;data]
 //tells the specified hostport to reload from it's current directory, signalling a change of data on-disk
 //@param hostport symbol of the form `:localhost:7003 or `::7003 or `:unix://7003
 .u.refresh:{[hostport]
-    .log.info"Refreshing database: ", string hostport;
+    .log.out"Refreshing database: ", string hostport;
     handle:@[hopen;hostport;{[x;hp].log.error "Could not establish connection to: ", string[hp]}[hostport]];
     @[handle;(`reload;`);{[x;hp] .log.error "Could not refresh: ",string[hp]}[hostport]];
     hclose handle;
@@ -66,10 +66,10 @@ upd:{[table;data]
 
 / init schema and sync up from log file
 .u.rep:{
-    .log.info "Setting up table definitions of tickerplant tables";
-    .log.info .Q.s each x;
+    .log.out "Setting up table definitions of tickerplant tables";
+    .log.out .Q.s each x;
     (.[;();:;].) x; //initialize schema based on tp returned schema (tablename ; schema)
-    .log.info "Replaying log file ", -3! y;
+    .log.out "Replaying log file ", -3! y;
     -11!y[0 1]
     };
 

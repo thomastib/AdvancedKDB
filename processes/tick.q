@@ -1,4 +1,4 @@
-/ q tick.q sym . -p 7001 </dev/null >foo 2>&1 &
+/ q processes/tick.q schema log -p 7001 
 "KDB+ 4.0 2021.07.12"
 
 defaultargs:(!) . flip (
@@ -22,7 +22,7 @@ system"l tick/",(src:first .z.x),".q"
 
 //define default listening port if not specified on startup
 if[not system"p";
-    .log.info["Setting port to 7001"];
+    .log.out["Setting port to 7001"];
     system"p 7001"];
 
 //move to .u namespace
@@ -39,7 +39,7 @@ ld:{
 	if[0<=type i;
 		.log.error[(string L)," is a corrupt log. Truncate to length ",(string last i)," and restart"];
 		exit 1];
-	.log.info["Opening handle to ",string L];
+	.log.out["Opening handle to ",string L];
     hopen L};
 
 //Define tick function. Input args are source schema file and destination log folder 
@@ -59,7 +59,7 @@ tick:{
 //Define end-of-day function. Takes no arguments
 //	Runs end functionality, increases daycount, closes handle to log file
 endofday:{
-	.log.info["Running end of day function."]
+	.log.out["Running end of day function."]
     end d;
 	d+:1;
 	if[l;hclose l;
@@ -87,10 +87,6 @@ ts:{
 //    }];
 if[system"t";
 	.z.ts:{
-		if[(`second$.z.P)=`second$`minute$.z.P;
-            .log.info["Number of messages:",string .u.i];
-            .log.info[string .u.w];
-            ];
         pub'[t;value each t];		    //publish data to subscribers	
 		@[`.;t;@[;`sym;`g#]0#];		
 		i::j;
@@ -111,11 +107,7 @@ if[system"t";
 
 if[not system"t";
     system"t 1000";
-	.z.ts:{ts .z.D;
-        if[(`second$.z.P)=`second$`minute$.z.P;
-//            .log.info["Number of messages:",string .u.i];
-//            .log.info[string .u.w];
-            ];};                        //runs ts to check for end-of-day every second			    
+	.z.ts:{ts .z.D;};                        //runs ts to check for end-of-day every second			    
 	upd:{[t;x] 						    //Define upd function, 
 		ts"d"$a:.z.p;					    //run ts again
 		f:key flip value t;				
