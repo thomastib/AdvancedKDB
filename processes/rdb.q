@@ -1,12 +1,10 @@
 \l libs/log.q
 
-/q tick/r.q [host]:port[:usr:pwd] [host]:port[:usr:pwd]
-/2008.09.09 .k ->.q
 if[not "w"=first string .z.o;system "sleep 1"];
 
 defaultargs:(!) . flip (
     (`serviceType      ; `rdb               );
-    (`tphostport       ; `$"localhost:7001" );
+    (`tphostport       ; `$"localhost:",getenv[`TP_PORT]);
     (`hdbhostport      ; `$"localhost:7003" )
  );
 
@@ -66,9 +64,8 @@ upd:{[table;data]
 / init schema and sync up from log file
 .u.rep:{
     .log.out["Setting up table definitions of tickerplant tables"];
-    .log.out[.Q.s each x];
     (.[;();:;].) each x; //initialize schema based on tp returned schema (tablename ; schema)
-    .log.info "Replaying log file ", -3! y;
+    .log.out "Replaying log file ", -3! y;
     -11!y[0 1]
     };
 

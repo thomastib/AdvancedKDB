@@ -1,4 +1,4 @@
-h:neg hopen `:localhost:7001 /connect to tickerplant 
+h:neg hopen `$":localhost:",getenv[`TP_PORT] /connect to tickerplant 
 syms:`MSFT.O`IBM.N`GS.N`BA.N`VOD.L /stocks
 prices:syms!45.15 191.10 178.50 128.04 341.30 /starting prices 
 n:2 /number of rows per update

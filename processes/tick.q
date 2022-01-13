@@ -87,15 +87,19 @@ ts:{
 //    }];
 if[system"t";
 	.z.ts:{
+		if[(`second$.z.P)=`second$`minute$.z.P;
+            .log.out["Number of messages:",string .u.i];
+            .log.out[string .u.w];
+            ];
         pub'[t;value each t];		    //publish data to subscribers	
-		@[`.;t;@[;`sym;`g#]0#];		
-		i::j;
-		ts .z.d}; 				    //run ts to check for end-of-day
-	upd:{[t;x] 				    //Define upd function, which inserts data into table
- 		t insert x;					
-		if[l;					    //send data to log file every update
-			l enlist (`upd;t;x);
-			j+:1];
+		    @[`.;t;@[;`sym;`g#]0#];		
+		    i::j;
+		    ts .z.d}; 				    //run ts to check for end-of-day
+	    upd:{[t;x] 				    //Define upd function, which inserts data into table
+ 		    t insert x;					
+		    if[l;					    //send data to log file every update
+			    l enlist (`upd;t;x);
+			    j+:1];
 		}];
 
 //Non-batching mode
@@ -107,7 +111,11 @@ if[system"t";
 
 if[not system"t";
     system"t 1000";
-	.z.ts:{ts .z.D;};                        //runs ts to check for end-of-day every second			    
+	.z.ts:{ts .z.D;
+        if[(`second$.z.P)=`second$`minute$.z.P;
+            .log.out["Number of messages:",string .u.i];
+            .log.out[string .u.w];];
+        };           //runs ts to check for end-of-day every second			    
 	upd:{[t;x] 						    //Define upd function, 
 		ts"d"$a:.z.p;					    //run ts again
 		f:key flip value t;				
