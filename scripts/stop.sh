@@ -1,25 +1,38 @@
 #Move to the home folder and run the environment setup script
-cd ${ALARIC_MD_HOME}
 . ./config/env.sh
+cd ${ADV_KDB_HOME}
 
-echo "Shutting down tickerplant on port ${TP_PORT}"
-lsof -i :$TP_PORT | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
-echo "Shutting down chained-tickerplant on port ${CTP_PORT}"
-lsof -i :$CTP_PORT | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
-echo "Shutting down conflated-chained-tickerplant on port ${CFTP_PORT}"
-lsof -i :$CFTP_PORT | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
-echo "Shutting down rdb on port ${RDB_PORT}"
-lsof -i :$RDB_PORT | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
-echo "Shutting down hdb on port ${HDB_PORT}"
-lsof -i :$HDB_PORT | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
-echo "Shutting down gateway on port(s) ${GW_PORT}"
-lsof -i :$GW_PORT | grep LISTEN | awk '{print $2}' | xargs kill -9
-echo "Shutting down orderbook NSDQ on port(s) ${OB_NSDQ_PORT}"
-lsof -i :$OB_NSDQ_PORT | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
-echo "Shutting down orderbook NYSE EDGE on port(s) ${OB_NYSE_EDGE_PORT}"
-lsof -i :$OB_NYSE_EDGE_PORT | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
-echo "Shutting down orderbook ARCA AMEX on port(s) ${OB_ARCA_AMEX_PORT}"
-lsof -i :$OB_ARCA_AMEX_PORT | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
-echo "Shutting down orderbook BATS BATSY on port(s) ${OB_BATS_BATSY_PORT}"
-lsof -i :$OB_BATS_BATSY_PORT | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
 
+if [[ "$@[*]" =~ "all" ]]; then 
+    echo "Stopping tickerplant"
+    lsof -i :${TP_PORT} | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
+    echo "Stopping RDB"
+    lsof -i :${RDB_PORT} | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
+    echo "Stopping Aggregation RDB"
+    lsof -i :${AGG_PORT} | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
+    # echo "Stopping CEP"
+    # lsof -i :${CEP_PORT} | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
+    echo "Stopping mock feedhandler"
+    lsof -i :${FEED_PORT} | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
+else
+    if [[ "$@[*]" =~ "tick" ]]; then
+        echo "Stopping tickerplant"
+        lsof -i :${TP_PORT} | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
+    fi
+    if [[ "$@[*]" =~ "rdb" ]]; then
+        echo "Stopping RDB"
+        lsof -i :${RDB_PORT} | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
+    fi
+    if [[ "$@[*]" =~ "aggRdb" ]]; then
+        echo "Stopping Aggregation RDB"
+        lsof -i :${AGG_PORT} | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
+    fi
+    if [[ "$@[*]" =~ "cep" ]]; then
+        echo "Stopping CEP"
+        lsof -i :${CEP_PORT} | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
+    fi
+    if [[ "$@[*]" =~ "feed" ]]; then
+        echo "Stopping mock feedhandler"
+        lsof -i :${FEED_PORT} | grep LISTEN | awk '{print $2; exit}' | xargs kill -9
+    fi
+fi

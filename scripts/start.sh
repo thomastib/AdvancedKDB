@@ -4,7 +4,7 @@
 . ./config/env.sh
 cd ${ADV_KDB_HOME}
 
-TICK_START="nohup ${QHOME}/${Q_OS}/q processes/tick.q ${Q_SCHEMA} ${TP_LOG_LOCATION} -p ${TP_PORT} -t ${TP_TIMER} </dev/null >> ${PROCESS_LOGS}/tick.log 2>&1 &"
+TP_START="nohup ${QHOME}/${Q_OS}/q processes/tick.q ${Q_SCHEMA} ${TP_LOG_LOCATION} -p ${TP_PORT} -t ${TP_TIMER} </dev/null >> ${PROCESS_LOGS}/tick.log 2>&1 &"
 
 RDB_START="nohup ${QHOME}/${Q_OS}/q processes/rdb.q -p ${RDB_PORT} </dev/null >> ${PROCESS_LOGS}/rdb.log 2>&1 &"
 
@@ -16,8 +16,8 @@ FEED_START="nohup ${QHOME}/${Q_OS}/q processes/feed.q -p ${FEED_PORT} </dev/null
 
 # Command line options (all, tick, rdb, aggRdb, cep, feed)
 if [[ "$@[*]" =~ "all" ]]; then  
-    echo $TICK_START
-    eval $TICK_START
+    echo $TP_START
+    eval $TP_START
     echo $RDB_START
     eval $RDB_START
     echo $AGG_RDB_START
@@ -28,8 +28,8 @@ if [[ "$@[*]" =~ "all" ]]; then
     eval $FEED_START
 else
     if [[ "$@[*]" =~ "tick" ]]; then
-        echo $TICK_START
-        eval $TICK_START
+        echo $TP_START
+        eval $TP_START
     fi
     if [[ "$@[*]" =~ "rdb" ]]; then
         echo $RDB_START
@@ -48,7 +48,3 @@ else
         eval $FEED_START
     fi
 fi
-
-
-# echo "Shutting down tickerplant on port ${TP_PORT}"
-# TP_STOP="lsof -i :${TP_PORT} | grep LISTEN | awk '{print $2; exit}' | xargs kill -9"
