@@ -1,15 +1,17 @@
 \l libs/log.q
 
-if[not "w"=first string .z.o;system "sleep 1"];
-
 defaultargs:(!) . flip (
-    (`serviceType      ; `rdb               );
-    (`tphostport       ; `$"localhost:",getenv[`TP_PORT]);
-    (`hdbhostport      ; `$"localhost:7003" )
- );
+    (`serviceType      ; `cep               );
+    (`tphostport       ; `$"localhost:",getenv[`TP_PORT])
+    );
 
-//read command line parameters
 args:.Q.def[defaultargs] .Q.opt[.z.x];
+
+
+.u.tphost:hopen `$":",string args[`tphostport];
+
+// Dummy tickerplant update function to call if tickerplant is down
+.u.upd: {[x;y]};
 
 upd:{[table;data]
     if[table in tables[];
@@ -20,13 +22,14 @@ upd:{[table;data]
                 flip f!data
                 ];
             ];
-        insert[table;data]
+        insert[table;data];
+        tradeAgg: select totalVol:sum[price*size], maxPrice: max price, minPrice: min price by sym from trade;
+        quoteAgg: select maxBid: max bid, minAsk: min ask, spread:max[bid]-min[ask] by sym from quote;
+        aggToB:`time`sym xcols update time:.z.N from 0!tradeAgg lj quoteAgg;
+        @[.u.tphost;(`.u.upd; `aggToB; flip get each aggToB); {h::0}]
         ];
     };
 
-///
-//saves table to disk and applies attributes as necessary
-//@param table symbol representing a table to save down
 .u.savetab:{[date;table]
 //    .log.info"Enumerating ",(string table)," against sym file";
 //    tab: .Q.en[hsym args[`hdbroot]] 0!value table; //enumerates in-memory table against on-disk sym file
@@ -47,11 +50,10 @@ upd:{[table;data]
 / end of day: save, clear, hdb reload
 .u.end:{[date]
     .u.savetab[date] each tables[`.];
- //   .u.sorttab[date] each tables[`.];
- //   .u.refresh each hsym args[`hdbhostport];
- };
+    //   .u.sorttab[date] each tables[`.];
+    //   .u.refresh each hsym args[`hdbhostport];
+    };
 
-/ init schema and sync up from log file
 .u.rep:{
     .log.out["Setting up table definitions of tickerplant tables"];
     (.[;();:;].) each x; //initialize schema based on tp returned schema (tablename ; schema)
