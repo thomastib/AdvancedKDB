@@ -22,8 +22,8 @@ if [[ "$@[*]" =~ "all" ]]; then
     eval $RDB_START
     echo $AGG_RDB_START
     eval $AGG_RDB_START
-    # echo $CEP_START
-    # eval $CEP_START
+    echo $CEP_START
+    eval $CEP_START
     echo $FEED_START
     eval $FEED_START
 else
