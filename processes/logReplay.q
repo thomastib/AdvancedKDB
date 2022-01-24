@@ -5,8 +5,8 @@
 //load other libs
 \l libs/log.q
 
-
-tpLog:`$.z.x[0];
+// get command line parameters
+tpLog:hsym `$.z.x[0];
 filterSym:`$.z.x[1];
 
 newLogFile: .[`$string[tpLog],"_",string filterSym; (); :; ()];

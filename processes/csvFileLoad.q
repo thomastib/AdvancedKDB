@@ -1,6 +1,8 @@
 //q csvFileLoad.q trade trade.csv
 
-// get inline parameters
+\l libs/log.q
+
+// get command line parameters
 tableName:`$.z.x[0];
 csvFile:`$.z.x[1];
 
