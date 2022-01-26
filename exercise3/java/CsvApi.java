@@ -88,7 +88,7 @@ public class CsvApi {
                             double bid = Double.parseDouble(rowValue[2]);
                             double ask = Double.parseDouble(rowValue[3]);
                             int bidSize = Integer.parseInt(rowValue[4]);
-                            int asize = Integer.parseInt(rowValue[5]);
+                            int askSize = Integer.parseInt(rowValue[5]);
 
                             Object[] quoteData = new Object[] {time, sym, bid, ask, bidSize, askSize};
                             // Send row value over to the TP
