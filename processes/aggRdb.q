@@ -1,12 +1,10 @@
 \l libs/log.q
 
-/q tick/r.q [host]:port[:usr:pwd] [host]:port[:usr:pwd]
-/2008.09.09 .k ->.q
 if[not "w"=first string .z.o;system "sleep 1"];
 
 defaultargs:(!) . flip (
     (`serviceType      ; `rdb               );
-    (`tphostport       ; `$"localhost:7001" );
+    (`tphostport       ; `$"localhost:",getenv[`TP_PORT]);
     (`hdbhostport      ; `$"localhost:7003" )
  );
 
@@ -25,7 +23,6 @@ upd:{[table;data]
         insert[table;data]
         ];
     };
-    
 
 ///
 //saves table to disk and applies attributes as necessary
@@ -36,10 +33,10 @@ upd:{[table;data]
 //    dir: ` sv .Q.par[hsym args[`hdbroot];date;table],`; //creates symbol like `:/home/kx/data/segs/seg5/trade/
 //    .log.info"Saving data to ",string dir;
 //   dir upsert tab; //append data to on-disk segment using upsert 
-    .log.info"Flushing data from ",string table;
+    .log.out"Flushing data from ",string table;
     table set 0#value table; //flushes out cached data
     if[`sym in cols table;
-        .log.info"Applying grouped attribute on sym column to in-memory table: ",string table;
+        .log.out"Applying grouped attribute on sym column to in-memory table: ",string table;
         keyCols:keys table; //table needs to be unkeyed to apply attributes
         @[0!table;`sym;`g#]; //reapplies g# attribute if it is needed
         keyCols xkey table;
@@ -62,14 +59,13 @@ upd:{[table;data]
     .u.savetab[date] each tables[`.];
  //   .u.sorttab[date] each tables[`.];
  //   .u.refresh each hsym args[`hdbhostport];
-    };
+ };
 
 / init schema and sync up from log file
 .u.rep:{
-    .log.info "Setting up table definitions of tickerplant tables";
-    .log.info .Q.s each x;
+    .log.out["Setting up table definitions of tickerplant tables"];
     (.[;();:;].) x; //initialize schema based on tp returned schema (tablename ; schema)
-    .log.info "Replaying log file ", -3! y;
+    .log.out "Replaying log file ", -3! y;
     -11!y[0 1]
     };
 

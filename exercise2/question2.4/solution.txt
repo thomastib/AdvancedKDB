@@ -1,0 +1,8 @@
+Original function:
+StringtoDate:{[x]{$[10h~abs type x;x:"D"$x;-14h~ type x;x:x;`date$x]}'[x]} 
+
+Given Input: 
+raze 500000#enlist("2010.01.01";2010.01.02). Do not use .Q.fu.
+
+Solution:
+StringtoDate:{u: distinct x; num: u?x; {$[10h~abs type x;x:"D"$x;-14h~ type x;x:x;`date$x]}'[u] num}
