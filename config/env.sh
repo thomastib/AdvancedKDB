@@ -3,6 +3,7 @@ export ADV_KDB_HOME=${HOME}/Documents/FD_home/AdvancedKDB
 export QHOME=${HOME}/q
 export Q_OS=m64
 export PROCESS_LOGS=${ADV_KDB_HOME}/logs
+export CSV_DIR=${ADV_KDB_HOME}/csv
 
 #Tickerplant Settings
 export TP_PORT=7001
@@ -21,3 +22,6 @@ export CEP_PORT=7005
 
 # Feedhandler Settings
 export FEED_PORT=7006
+
+# Websocket Settings
+export WEB_PORT=7013
