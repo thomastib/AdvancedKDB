@@ -1,0 +1,3 @@
+'2022.01.26T18:08:39.438 hop. OS reports: Connection refused
+  [2]  /Users/thomastib/Documents/FD_home/AdvancedKDB/processes/feed.q:1: h:neg hopen `$":localhost:",getenv[`TP_PORT] /connect to tickerplant
+                                                                                ^

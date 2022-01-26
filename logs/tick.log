@@ -1,0 +1,7 @@
+"KDB+ 4.0 2021.07.12"
+2022.01.26D17:08:56.957098000 User: thomass-macbook-air-234.local INFO: Opening handle to :/Users/thomastib/Documents/FD_home/AdvancedKDB/logs/tplog/schema2022.01.26 Mem: `used`heap`peak`wmax`mmap`mphy`syms`symw!422208 67108864 67108864 0 0 4294967..
+2022.01.26D17:08:56.959689000 User: thomass-macbook-air-234.local INFO: Port Closed: 0 Mem: `used`heap`peak`wmax`mmap`mphy`syms`symw!382336 67108864 67108864 0 0 4294967..
+2022.01.26D17:09:22.088736000 User: thomass-macbook-air-234.local INFO: Port Opened: 9 Mem: `used`heap`peak`wmax`mmap`mphy`syms`symw!384400 67108864 67108864 0 0 4294967..
+2022.01.26D17:09:23.060681000 User: thomass-macbook-air-234.local INFO: Port Opened: 10 Mem: `used`heap`peak`wmax`mmap`mphy`syms`symw!384432 67108864 67108864 0 0 4294967..
+2022.01.26D17:25:13.181948000 User: thomass-macbook-air-234.local INFO: Port Opened: 11 Mem: `used`heap`peak`wmax`mmap`mphy`syms`symw!384656 67108864 67108864 0 0 4294967..
+2022.01.26D17:38:52.621208000 User: thomass-macbook-air-234.local INFO: Port Closed: 0 Mem: `used`heap`peak`wmax`mmap`mphy`syms`symw!384736 67108864 67108864 0 0 4294967..

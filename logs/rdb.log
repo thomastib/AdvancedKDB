@@ -1,0 +1,6 @@
+'2022.01.26T18:08:40.492 hop. OS reports: Connection refused
+  [2]  /Users/thomastib/Documents/FD_home/AdvancedKDB/processes/rdb.q:62: .u.rep .(hopen `$":",string args[`tphostport])"(.u.subEx[`;`;`aggToB];`.u `i`L)";
+                                                                                   ^
+2022.01.26D17:09:23.061192000 User: thomass-macbook-air-234.local INFO: Setting up table definitions of tickerplant tables Mem: `used`heap`peak`wmax`mmap`mphy`syms`symw!382592 67108864 67108864 0 0 4294967..
+2022.01.26D17:09:23.063676000 User: thomass-macbook-air-234.local INFO: Replaying log file (0;`:/Users/thomastib/Documents/FD_home/AdvancedKDB/logs/tplog/schema2022.01... Mem: `used`heap`peak`wmax`mmap`mphy`syms`symw!382720 67108864 67108864 0 0 4294967..
+2022.01.26D17:09:23.064204000 User: thomass-macbook-air-234.local INFO: Port Closed: 0 Mem: `used`heap`peak`wmax`mmap`mphy`syms`symw!369168 67108864 67108864 0 0 4294967..

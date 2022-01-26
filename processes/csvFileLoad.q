@@ -6,7 +6,7 @@
 tableName:`$.z.x[0];
 csvFile:`$.z.x[1];
 
-// Open port to tickerplan or default to self if tp is down
+// Open port to tickerplant or default to self if tp is down
 tpHandle: @[hopen; "J"$getenv[`TP_PORT]; {0}];
 
 if[tableName=`trade;
