@@ -1,0 +1,21 @@
+Locate the error: 
+Below is a snippet of the tplog, obtained running "get `:tplog" in a q session:
+
+(`upd;`trade;+`sym`price`size!(`A`C`B`C`B;9.025784 4.470818 1.387079 9.409523 0.0283353;37 77 28 26 84))
+(`upd;`trade;+`sym`price`size!(`A`D`A`A`C;5.339515 9.387084 3.027801 4.448492 4.414491;9 74 55 92 14))
+(`upd;`trade;+`sym`price`size!("ACBCD";6.88089 6.377554 0.3845637 8.972357 7.935513;94 19 12 11 1))
+(`upd;`trade;+`sym`price`size!(`C`E`B`D`E;9.082711 9.796094 3.077491 3.652273 9.591177;4 46 99 52 10))
+(`upd;`trade;+`sym`price`size!(`F`F`C`F`D;7.24948 8.112026 2.086614 9.907116 5.794801;36.96114 11.75355 92.34386 40.15936 56.19037))
+(`upd;`trade;+`sym`price`size!(`A`C`E`D`E;6.919292 9.471555 3.40393 9.614594 2.699208;32 82 81 56 81))
+,`upd
+,`trade
+,+`sym`price`size!(`D`B`D`B`C;6.718125 8.639591 8.439807 5.426371 0.7757332;24 61 30 89 14)
+(`upd;`trade;+`sym`price`size!("FDAEB";2.062569 4.81821 2.065625 5.229178 3.338806;56 90 63 28 51))
+
+Errors:
+1. On the 6-8 lines of the file, 1 message is broken into 3 parts.
+2. syms are not of symbol type for the third and last rows
+3. size column is not type long in the 5th row
+
+Fix: 
+`:fixedTpLog set .[3 cut raze get `:tplog; (::;2); {update `$sym, "F"$price, `long$"F"$size from string[x]} each]

@@ -1,0 +1,12 @@
+Question: "In your current system you have a historical database and a single hdb kdb+ instance to host user queries.
+	 Users are complaining about slowness. What is the probable cause of the slowness and suggest 2 changes that 
+	 could be made to alleviate the problem. Maintain a single entry point to the system if possible."
+
+Answer: The likely cause of of the slowness is that there are other queries using up system resources. To solve
+    this there are two options
+    1. Use a gateway to connect to various HDBs: Using a gateway maintains a single point of entry for the users but 
+    the gateway can distribute queries to several HDBs. Thus, several queries can be run at the same time. 
+    2. Limit the types of queries that users can send to the HDB: Users can be limited in how they format their 
+    queries, or they can be forced to use preset queries. This might frustrate some users but will ensure that 
+    their queries will not stall the process
+
