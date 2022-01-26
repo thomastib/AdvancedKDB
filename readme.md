@@ -67,4 +67,23 @@ Sequence to update the schema:
 The solutions to each question in Exercise 2 are in txt files in the `exercise2` directory
 
 ## Exercise 3
+For all of the feeds to work, the tickerplant must be running
+### Python Feed
+To run the Python feedhandler, run the following command
+``` sh
+$ pyq exercise3/python/pythonAPI.py trade.csv
+```
+Note that python3 and pyq must be installed beforehand
 
+### Java Feed
+To run the Java feedhandler, run the following command
+``` sh
+$ java exercise3/java/CsvApi
+```
+
+### Websocket
+Start the websocket process
+``` sh
+$ q exercise3/html/q/websocket.q -p 7013
+```
+Connect from the browser by navigating to `${ADV_KDB_HOME}/exercise3/html/index.html`

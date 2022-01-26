@@ -1,4 +1,3 @@
-
 \l libs/log.q
 
 if[not "w"=first string .z.o;system "sleep 1"];
